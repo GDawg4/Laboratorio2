@@ -4,14 +4,14 @@ import com.sun.tools.javac.Main
 
 val mainList: ArrayList<Listas> = ArrayList()
 var wantsToContinue: Boolean = true
+var wantsToContinueInList: Boolean = true
 var ingreso: String = ""
 var ingreso2: String = ""
 var newListName: String = ""
 var newTaskName: String = ""
-var selectOption: Int = 0
+var selectOption: Int = 1
 var printCounter: Int = 1
-var presentList: Listas = mainList[selectOption - 1]
-//var
+var changeTask: Int = 0
 
 fun menu1():String{
     return """
@@ -64,6 +64,7 @@ fun main(args: Array<String>){
             }
         }
         else{
+            var presentList: Listas = mainList[selectOption - 1]
             println(menu2())
             ingreso = readLine()!!
             when(ingreso){
@@ -77,7 +78,6 @@ fun main(args: Array<String>){
                     )
                     mainList.add(newList)
                 }
-                //regresar a hacer bonito
                 "2" -> {
                     for (i in mainList) {
                         println("${printCounter} ${i.name}")
@@ -94,33 +94,45 @@ fun main(args: Array<String>){
                     println("Qué lista desea seleccionar?")
                     selectOption = readLine()!!.toInt()
                     println("Eligió la opción $presentList")
-                    println(menu3(presentList))
-                    ingreso2 = readLine()!!
-                    when(ingreso2){
-                        "1" ->{
-                        }
-                        "2" ->{
-                            println("Qué nombre desea dar a la nueva tarea?")
-                            newTaskName = readLine()!!
-                            var newTask:Task = Task(
-                                    name = newTaskName
-                            )
-                            presentList.addTask(newTask)
-                            println("Tarea agredada")
-                        }
-                        "3" ->{
-                            for (i in presentList.tasks) {
-                                println("$printCounter ${i.name}")
-                                printCounter += 1
-                            }
-                            printCounter = 1
-                            println("Ingrese el número de la tarea a completar")
 
+                    do {
+                        println(menu3(presentList))
+                        ingreso2 = readLine()!!
+                        when(ingreso2){
+                            "1" ->{
+                                wantsToContinueInList = false
+                            }
+                            "2" ->{
+                                println("Qué nombre desea dar a la nueva tarea?")
+                                newTaskName = readLine()!!
+                                var newTask = Task(
+                                        name = newTaskName
+                                )
+                                presentList.addTask(newTask)
+                                println("Tarea agredada")
+                            }
+                            "3" ->{
+                                for (i in presentList.tasks) {
+                                    println("$printCounter ${i}")
+                                    printCounter += 1
+                                }
+                                printCounter = 1
+                                println("Ingrese el número de la tarea a completar")
+                                changeTask = readLine()!!.toInt()
+                                presentList.tasks[changeTask-1].completeTask()
+                            }
+                            "4"->{
+                                for (i in presentList.tasks) {
+                                    println("$printCounter ${i}")
+                                    printCounter += 1
+                                }
+                                printCounter = 1
+                            }
+                            "5" ->{
+                                wantsToContinue = false
+                            }
                         }
-                    }
-                }
-                "4" ->{
-                    wantsToContinue = false
+                    }while(wantsToContinueInList)
                 }
             }
         }

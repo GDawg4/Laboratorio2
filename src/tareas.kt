@@ -4,9 +4,11 @@ class Task(
 )
         {
             fun completeTask(){
-                completed = true
+                completed = !completed
             }
-            fun discompleteTasl(){
-                completed = false
+
+            override fun toString(): String {
+                return """$name (${if (completed){"completada"}else{"no completada)"
+                }}"""
             }
         }
