@@ -1,5 +1,3 @@
-import com.sun.tools.javac.Main
-
 //Rodrigo Garoz 18102
 
 val mainList: ArrayList<Listas> = ArrayList()
@@ -9,7 +7,7 @@ var ingreso: String = ""
 var ingreso2: String = ""
 var newListName: String = ""
 var newTaskName: String = ""
-var selectOption: Int = 1
+var selectOption: Int = 0
 var printCounter: Int = 1
 var changeTask: Int = 0
 
@@ -51,8 +49,8 @@ fun main(args: Array<String>){
                 "1" -> {
                     println("Qué nombre desea darle a su nueva lista?")
                     newListName = readLine()!!
-                    var newTaskList: ArrayList<Task> = ArrayList()
-                    var newList = Listas(
+                    val newTaskList: ArrayList<Task> = ArrayList()
+                    val newList = Listas(
                             name = newListName,
                             tasks = newTaskList
                     )
@@ -64,15 +62,14 @@ fun main(args: Array<String>){
             }
         }
         else{
-            var presentList: Listas = mainList[selectOption - 1]
             println(menu2())
             ingreso = readLine()!!
             when(ingreso){
                 "1" -> {
                     println("Qué nombre desea darle a su nueva lista?")
                     newListName = readLine()!!
-                    var newTaskList: ArrayList<Task> = ArrayList()
-                    var newList = Listas(
+                    val newTaskList: ArrayList<Task> = ArrayList()
+                    val newList = Listas(
                             name = newListName,
                             tasks = newTaskList
                     )
@@ -80,59 +77,60 @@ fun main(args: Array<String>){
                 }
                 "2" -> {
                     for (i in mainList) {
-                        println("${printCounter} ${i.name}")
+                        println("$printCounter $i")
                         printCounter += 1
                     }
                     printCounter = 1
                 }
-                "3" ->{
+                "3" -> {
                     for (i in mainList) {
-                        println("${printCounter} ${i.name}")
+                        println("${printCounter} $i")
                         printCounter += 1
                     }
                     printCounter = 1
                     println("Qué lista desea seleccionar?")
                     selectOption = readLine()!!.toInt()
+                    var presentList: Listas = mainList[selectOption - 1]
                     println("Eligió la opción $presentList")
 
                     do {
                         println(menu3(presentList))
                         ingreso2 = readLine()!!
-                        when(ingreso2){
-                            "1" ->{
+                        when (ingreso2) {
+                            "1" -> {
                                 wantsToContinueInList = false
                             }
-                            "2" ->{
+                            "2" -> {
                                 println("Qué nombre desea dar a la nueva tarea?")
                                 newTaskName = readLine()!!
-                                var newTask = Task(
+                                val newTask = Task(
                                         name = newTaskName
                                 )
                                 presentList.addTask(newTask)
                                 println("Tarea agredada")
                             }
-                            "3" ->{
+                            "3" -> {
                                 for (i in presentList.tasks) {
-                                    println("$printCounter ${i}")
+                                    println("$printCounter $i")
                                     printCounter += 1
                                 }
                                 printCounter = 1
                                 println("Ingrese el número de la tarea a completar")
                                 changeTask = readLine()!!.toInt()
-                                presentList.tasks[changeTask-1].completeTask()
+                                presentList.tasks[changeTask - 1].completeTask()
                             }
-                            "4"->{
+                            "4" -> {
                                 for (i in presentList.tasks) {
-                                    println("$printCounter ${i}")
+                                    println("$printCounter $i")
                                     printCounter += 1
                                 }
                                 printCounter = 1
                             }
-                            "5" ->{
-                                wantsToContinue = false
-                            }
                         }
-                    }while(wantsToContinueInList)
+                    } while (wantsToContinueInList)
+                }
+                "4" -> {
+                    wantsToContinue = false
                 }
             }
         }

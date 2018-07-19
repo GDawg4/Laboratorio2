@@ -8,7 +8,7 @@ class Task(
             }
 
             override fun toString(): String {
-                return """$name (${if (completed){"completada"}else{"no completada)"
+                return """$name (${if (completed){"completada)"}else{"no completada)"
                 }}"""
             }
         }
